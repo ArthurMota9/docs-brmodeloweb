@@ -4,7 +4,7 @@ Esta etapa gera uma modelagem de dados que representa a estrutura de um BD (Banc
 
 Geralmente, essa etapa é resultado da conversão de uma modelagem conceitual, porém, é possível iniciar o projeto de BD, diretamente, pelo projeto lógico, especialmente quando o projetista possui o conhecimento conceitual do projeto.
 
-?> A criação de _views_ e algumas _constraints_ estão apenas disponíveis no ambiente de [Stage](https://brmodelo-stage.herokuapp.com/#!/).
+?> A criação de _views_ e algumas _constraints_ estão apenas disponíveis no ambiente de [Stage](https://tcc-arthur.herokuapp.com/#!/).
 
 ## Incluindo _Constraints_
 
