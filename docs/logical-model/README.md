@@ -1,86 +1,99 @@
 # Modelagem lógica
 
-Esta etapa gera uma modelagem de dados que representa a estrutura de um BD (Banco de dados) no nível de abstração visto pelo usuário do SGBD (Sistemas Gerenciadores de Bancos de Dados). O modelo lógico de um BD relacional deve definir quais as tabelas que o BD contém e, para cada tabela, definir os nomes das colunas, dentre outras características. 
+A modelagem do tipo lógica representa a estrutura de um _banco de dados_ (BD) em nível de abstração visto pelo usuário do _sistemas gerenciadores de bancos de dados_ (SGBD). O modelo lógico de um banco de dados relacional deve definir quais as tabelas contidas no banco e, para cada tabela, especificar também nomes das colunas, dentre outras características. 
 
-Geralmente, essa etapa é resultado da conversão de uma modelagem conceitual, porém, é possível iniciar o projeto de BD, diretamente, pelo projeto lógico, especialmente quando o projetista possui o conhecimento conceitual do projeto.
+A modelagem lógica é geralmente resultado da conversão de uma modelagem conceitual, porém, é possível também iniciar o projeto pelo projeto lógico, especialmente quando o projetista possui o conhecimento conceitual do projeto.
 
-?> A criação de _views_ e algumas _constraints_ estão apenas disponíveis no ambiente de [Stage](https://brmodelo-stage.herokuapp.com/#!/).
+## Constraints
 
-## Incluindo _Constraints_
+_Constraints_ são um recurso usado para definir regras para os dados em uma tabela específica, garantindo a precisão e confiabilidade da informação. Caso ocorra qualquer violação entre a restrição e a execução de determinada ação, a ação é abortada.
 
-As _constraints_ são usadas para especificar regras para os dados em uma tabela, garantindo a precisão e confiabilidade da informação. Caso ocorra qualquer violação entre a restrição e a execução de determinada ação, a ação é abortada.
-
-No BR Modelo Web as seguintes restrições de integridade estão disponíveis:
+No **BR Modelo Web** as seguintes restrições de integridade estão disponíveis:
 
 | Nome | Descrição |
-| ------------------- | ------------ |
+| ---- | --------- |
 | **Chave primária** | Identifica unicamente cada registro em uma tabela. |
-| **Chave estrangeira** | É um campo (ou coleção de campos) em uma tabela, que referencia à uma chave primária em outra tabela. |
+| **Chave estrangeira** | Atributo (ou coleção de atributos) de uma tabela que referencia à chave primária de outra tabela. |
 | **Not null** | Garante que uma coluna não aceite valores nulos. |
-| **Unique** | Garante que todos os valores desta coluna sejam únicos. |
-| **Default** | É usado para definir um valor padrão para a coluna, caso nenhum valor seja especificado. |
-| **Check** | A cláusula _check(p)_ especifica um predicado P que precisa ser satisfeito em cada tupla. |
-| **Auto increment** | Permite que um número único seja gerado, automaticamente, quando um novo registro é inserido em uma tabela. |
+| **Unique** | Garante que todos os valores da coluna sejam únicos. |
+| **Default** | Define o valor padrão de uma coluna caso nenhum valor seja especificado. |
+| **Check** | Especifica um predicado **P** (_check(p)_) que precisa ser satisfeito em cada tupla. |
+| **Auto increment** | Permite que um número único seja gerado automaticamente quando um novo registro é inserido na tabela. |
 
-Para incluir as _constraints_, com a modelagem lógica aberta:
+!> Algumas **constraints** estão em desenvolvimento e encontram-se disponíveis apenas no [ambiente de testes](https://tcc-arthur.herokuapp.com/#!/).
 
-1. Selecione uma tabela;
-1. Abra a sessão de Colunas na parte direita da tela;
-1. Adicione ou edite uma coluna;
-1. Inclua as _constraints_.
+## Regras no uso de constraints
+
+- Colunas que são **chave primária** ou **chave estrangeira** não podem possuir valor **_default_**;
+- Colunas que são **chave primária** são também **_not null_** e **_unique_**;
+- Colunas com o valor **default** não podem ser **_unique_**;
+- Colunas que são **chave estrangeira** ou possuem valor **default** não podem ser **_auto increment_**.
+
+## Incluindo Constraints
+
+1. Vá para a modelagem lógica que deseja editar
+1. Selecione uma tabela
+1. No painel de propriedades na extremidade direita da sua tela, expanda a sessão _Colunas_
+1. Selecione uma coluna existente ou adicione uma nova coluna clicando no botão _Adicionar coluna_
+1. Na parte inferior do painel de detalhes da coluna, inclua as _constraints_ desejadas
 
 <video class="video-player" controls>
 	<source src="logical-model/assets/constraints.mp4" type="video/mp4">
 	Desculpe, seu navegador não suporta esse formato de vídeo.
 </video>
 
-### Regras no uso de _constraints_
+## Views
 
-- Colunas que são chave primária ou estrangeira não podem possuir valor **_default_**;
-- Colunas que são chave primária, automaticamente, são **_not null_** e **_unique_**;
-- Colunas com o valor **_default_** não podem ser sinalizadas como **_unique_**;
-- Colunas que são chave estrangeira ou possuem valor **_default_** não podem ser sinalizadas como **_auto increment_**.
+Uma view é o conjunto de resultados de uma consulta armazenada nos dados. Ao contrário das tabelas base, comuns em um banco de dados relacional, uma view não faz parte do esquema físico. Como um conjunto de resultados, a view é uma tabela virtual computada ou agrupada dinamicamente a partir de dados no banco quando o acesso a essa view é solicitado.
 
-## Criando _Views_
+Views podem ser utilizadas para múltiplos propósitos como por exemplo:
 
-Uma visão é uma ferramenta importante no desenvolvimento de banco de dados. Pode ser utilizada para ocultar detalhes e reduzir complexidade do BD, disponibilizar ao usuário apenas o que ele de fato necessita, ser útil como filtro de segurança ou como estratégia de gerenciamento de permissões.
+- Ocultar detalhes
+- Reduzir complexidade do banco
+- Filtro de segurança
+- Estratégia de gerenciamento de permissões
 
-### Passos para criação de _Views_:
+## Criando Views
 
-1. Arrastar o elemento da visão do lado esquerdo para o canvas;
-1. Selecione a tabela base, que pode ser uma ou mais;
-1. Selecione o nome da visão;
-1. Selecione as colunas da visão (colunas das tabelas base selecionadas).
+1. Vá para a modelagem lógica que deseja editar
+1. Na barra de elementos à esquerda da sua tela, arraste o elemento que deseja adicionar ao canvas
+1. No painel de propriedades na extremidade direita da sua tela, selecione uma ou mais tabelas bases
+1. Adicione o nome da View
+1. Na área de colunas da view selecione as colunas das tabelas base selecionadas
+1. Salve as alteração usando o botão "Salvar" no painel de propriedades
 
 <video class="video-player" controls>
 	<source src="logical-model/assets/views.mp4" type="video/mp4">
 	Desculpe, seu navegador não suporta esse formato de vídeo.
 </video>
 
-### Inserindo _query expression_:
+## Adicionando query expression
 
-É possível inserir uma _query expression_ de forma manual por meio do campo de texto ou clicando no _link_ 'Incluir consulta para criação da visão', que irá abrir um modal para auxiliar na criação da expressão. Passos para criar utilizando o modal:
-
-1. Clique no _link_ 'Incluir consulta para criação da visão';
-1. Clique no botão 'Adicionar condição';
-1. Selecione a coluna da tabela;
-1. Selecione o operador de comparação;
-1. Insira o valor que será comparado;
-1. Clique no botão para confirmar.
+1. Selecione a tabela que deseja adicionar a query expression
+1. No painel de propriedades na extremidade direita da sua tela, clique em 'Incluir consulta para criação da visão'
+1. Uma modal se abrirá. Nela clique em 'Adicionar condição'
+1. Selecione a coluna da tabela
+1. Um novo campo se abrirá. Nele selecione o operador de comparação
+1. Um terceiro e último campo se abrirá. Nele insira o valor que será comparado
+1. Confirme a adição clicando no botão à direita dos campos
+1. Clique em "Confirmar" para salvar a query expression criada
 
 <video class="video-player" controls>
 	<source src="logical-model/assets/view-query-expression.mp4" type="video/mp4">
 	Desculpe, seu navegador não suporta esse formato de vídeo.
 </video>
 
-### Inserindo _join_ entre tabelas:
+?> Também é possível inserir query expressions de forma manual por meio do campo de texto localizado no painel de propriedades
 
-Quando a criação da visão utiliza mais de uma tabela base, é necessário informar os atributos que irão compor o _join_ dessas tabelas. Passos para criação do _join_:
+## Inserindo _join_ entre tabelas:
 
-1. Clique no _link_ 'Incluir consulta para criação da visão';
-1. Clique no botão 'Adicionar join';
-1. Selecione as colunas das tabelas à serem comparadas;
-1. Clique no botão para confirmar.
+Quando a criação da view utiliza mais de uma tabela base, é necessário informar os atributos que irão compor o join dessas tabelas.
+
+1. Selecione a tabela que deseja adicionar a query expression
+1. No painel de propriedades na extremidade direita da sua tela, clique em 'Incluir consulta para criação da visão'
+1. Uma modal se abrirá. Nela lique em 'Adicionar join'
+1. Selecione as colunas das tabelas à serem comparadas
+1. Clique no botão para confirmar
 
 <video class="video-player" controls>
 	<source src="logical-model/assets/joins.mp4" type="video/mp4">
@@ -89,7 +102,7 @@ Quando a criação da visão utiliza mais de uma tabela base, é necessário inf
 
 ## Convertendo para projeto físico
 
-É possível gerar um _script_ SQL após a criação da modelagem lógica, basta clicar no ícone e irá abrir um modal com o projeto físico compatível com o SGBD MySQL. Nesse momento as informações podem ser editadas, por exemplo, incluindo a quantidade correta de cada campo _varchar_ ou _char_.
+É possível gerar um script SQL após a criação da modelagem lógica, basta clicar no ícone e irá abrir um modal com o projeto físico compatível com o SGBD MySQL. Nesse momento as informações podem ser editadas, por exemplo, incluindo a quantidade correta de cada campo varchar ou char.
 
 <video class="video-player" controls>
 	<source src="logical-model/assets/projeto-fisico.mp4" type="video/mp4">
